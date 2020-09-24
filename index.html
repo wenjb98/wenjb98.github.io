@@ -178,6 +178,42 @@
     
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
+        <a href="/2020/09/25/java%E5%9F%BA%E7%A1%80-%E5%9D%A6%E5%85%8B%E5%A4%A7%E6%88%98%E9%9A%BE%E7%82%B9%E6%80%BB%E7%BB%93/">java基础-坦克大战难点总结</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/09/25/java%E5%9F%BA%E7%A1%80-%E5%9D%A6%E5%85%8B%E5%A4%A7%E6%88%98%E9%9A%BE%E7%82%B9%E6%80%BB%E7%BB%93/">
+          
+          
+            
+          
+          1 游戏界面闪烁
+问题描述 : 坦克在移动的过程中间歇闪烁 
+
+问题分析：由于我游戏窗口是继承自 Frame 类的，重写了此类的update方法，此方法不能主动调用 需要paint 和repaint 回调,这时候就需要单独开启一个线程间隔实现指定时间对游戏界面的定时重绘（刷新），譬如我的重绘线程调用一次方法就sleep 30 毫秒 那么我1秒就会重绘33次，FPS也就是33 ，这个时候也就产生了问
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-09-25 00:28" pubdate>
+              2020-09-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         <a href="/2020/09/21/%E7%AE%97%E6%B3%95%E2%80%94%E7%AE%80%E5%8D%95%E6%9F%A5%E6%89%BE/">算法—简单查找</a>
       </h1>
 

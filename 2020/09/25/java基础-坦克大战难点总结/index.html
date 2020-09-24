@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="你们萌死了">
+  <meta name="keywords" content="">
+  <title>java基础-坦克大战难点总结 - MyBlog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>NMMSL</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-25 00:28" pubdate>
+        2020年9月25日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">java基础-坦克大战难点总结</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h4 id="1-游戏界面闪烁"><a href="#1-游戏界面闪烁" class="headerlink" title="1 游戏界面闪烁"></a>1 游戏界面闪烁</h4><ul>
+<li><p>问题描述 : 坦克在移动的过程中间歇闪烁 </p>
+</li>
+<li><p>问题分析：由于我游戏窗口是继承自 Frame 类的，重写了此类的update方法，此方法不能主动调用 需要paint 和repaint 回调,这时候就需要单独开启一个线程间隔实现指定时间对游戏界面的定时重绘（刷新），譬如我的重绘线程调用一次方法就sleep 30 毫秒 那么我1秒就会重绘33次，FPS也就是33 ，<strong>这个时候也就产生了问题，在repaint触发时没有将当前的绘制的图形进行显示</strong></p>
+</li>
+<li><p>解决方案：采用双缓冲方法—-所谓双缓冲，就是在内存中开辟一片区域，作为后台图象，程序对它进行更新、修改，绘制完成后再显示到屏幕上。  </p>
+<ul>
+<li><p>定义一个Graphics对象gBuffer和一个Image对象iBuffer。按屏幕大小建立一个缓冲对象给iBuffer。然后取得iBuffer的Graphics赋给gBuffer。此处可以把gBuffer理解为逻辑上的缓冲屏幕，而把iBuffer理解为缓冲屏幕上的图象。</p>
+</li>
+<li><p>在gBuffer（逻辑上的屏幕）上用paint(Graphics g)函数绘制图象。</p>
+</li>
+<li><p>将后台图象iBuffer绘制到Frame窗体。</p>
+<pre><code class="hljs java"><span class="hljs-comment">/**双缓冲底层虚拟图*/</span>
+    <span class="hljs-keyword">private</span> BufferedImage bufImage =<span class="hljs-keyword">new</span>      BufferedImage(FRAME_WIDTH,FRAME_HEIGHT,BufferedImage.TYPE_4BYTE_ABGR);
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(Graphics g1)</span> </span>&#123;
+        <span class="hljs-comment">//使用双缓冲先在bufImage虚拟图上画</span>
+        Graphics g = bufImage.getGraphics();
+        <span class="hljs-keyword">switch</span> (gameState)&#123;
+            <span class="hljs-keyword">case</span> STATE_MENU:
+                drawMenu(g);
+                <span class="hljs-keyword">break</span>;
+            <span class="hljs-keyword">case</span> STATE_HELP:
+                drawHelp(g);
+                <span class="hljs-keyword">break</span>;
+            <span class="hljs-keyword">case</span> STATE_ABOUT:
+                drawAbout(g);
+                <span class="hljs-keyword">break</span>;
+            <span class="hljs-keyword">case</span> STATE_RUN:
+                drawRun(g);
+                <span class="hljs-keyword">break</span>;
+            <span class="hljs-keyword">case</span> STATE_OVER:
+                drawOver(g);
+                <span class="hljs-keyword">break</span>;
+        &#125;
+        <span class="hljs-comment">//使用系统画笔绘制到frame上</span>
+        g1.drawImage(bufImage,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-keyword">null</span>);
+
+    &#125;
+</code></pre>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<p>  详细的解决方案：<a target="_blank" rel="noopener" href="https://blog.csdn.net/kai_wei_zhang/article/details/8120382?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-2-8120382.nonecase&amp;utm_term=java%20%E5%8F%8C%E7%BC%93%E5%86%B2%E6%8A%80%E6%9C%AF">https://blog.csdn.net/kai_wei_zhang/article/details/8120382?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-2-8120382.nonecase&amp;utm_term=java%20%E5%8F%8C%E7%BC%93%E5%86%B2%E6%8A%80%E6%9C%AF</a></p>
+<h4 id="2-对象池设计"><a href="#2-对象池设计" class="headerlink" title="2 对象池设计"></a>2 对象池设计</h4><ul>
+<li><p>问题描述：游戏中子弹 坦克 地图的元素块 游戏运行过程中需要频繁的进行实例的创建，在坦克挂掉，子弹离开屏幕后，地图块被破坏掉后 不能进行及时的回收。</p>
+</li>
+<li><p>问题分析：频繁的创建对象，以及对象回收，虽然java的jvm有相应的垃圾回收机制，但是，<strong>不能做到用完即回收。</strong></p>
+</li>
+<li><p>解决方案：引入对象池，先在游戏开始时初始化指定数量的对象，将对象放入一个数组容器中，在需要用到对象的时候从池中获取，用后在放回池中。如在游戏开始的时候，先初始化100个子弹对象，当坦克开火的时候重池中获取，当子弹击中敌人 地图块 或者脱离边界的时候回收。</p>
+<pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.nmmsl.util;
+
+<span class="hljs-keyword">import</span> cn.nmmsl.game.Bullet;
+
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 炮弹对象池</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BulletPool</span> </span>&#123;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_POOL_SIZE = <span class="hljs-number">200</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> POOL_MAX_SIZE = <span class="hljs-number">300</span>;
+    <span class="hljs-comment">//用于保存所有跑弹的容器</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> List&lt;Bullet&gt; pool = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 在加载时创建 初始化200个炮弹对象放入池中</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-keyword">static</span> &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; DEFAULT_POOL_SIZE; i++) &#123;
+            pool.add(<span class="hljs-keyword">new</span> Bullet());
+        &#125;
+
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  Bullet <span class="hljs-title">get</span><span class="hljs-params">()</span></span>&#123;
+        Bullet bullet = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">if</span>(pool.size() == <span class="hljs-number">0</span>)&#123;
+            <span class="hljs-comment">//池中的炮弹打完了 （打出比回收快）</span>
+            bullet = <span class="hljs-keyword">new</span> Bullet();
+        &#125;<span class="hljs-keyword">else</span>&#123;
+            bullet = pool.remove(<span class="hljs-number">0</span>);
+        &#125;
+        <span class="hljs-keyword">return</span> bullet;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">theReturn</span><span class="hljs-params">(Bullet bullet)</span></span>&#123;
+        <span class="hljs-keyword">if</span>(pool.size() == POOL_MAX_SIZE)&#123;
+            <span class="hljs-comment">//池的容量已经到达临界 不用归还</span>
+            <span class="hljs-keyword">return</span>;
+        &#125;
+        pool.add(bullet);
+    &#125;
+&#125;
+</code></pre>
+
+
+
+</li>
+</ul>
+<h4 id="3-坦克与地图块碰撞"><a href="#3-坦克与地图块碰撞" class="headerlink" title="3 坦克与地图块碰撞"></a>3 坦克与地图块碰撞</h4><ul>
+<li>问题描述：坦克与地图块都是矩形的像素块，不方便进行碰撞判定</li>
+<li>问题分析：化面为点</li>
+<li>解决方案：取地图块的8个点，逐一和矩形坦克进行点面重叠判定</li>
+</ul>
+<pre><code class="hljs java">    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     *  判断一个点是否在某一个正方形内部</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> rectX 正方形中心的x坐标</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> rectY 正方形中心的Y坐标</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> radius 正方形边长的一半</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> pointX  点的X</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> pointY 点的Y</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 如果点在正方形是的内部 返回true</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  <span class="hljs-keyword">final</span>  <span class="hljs-keyword">boolean</span> <span class="hljs-title">isCollide</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rectX ,<span class="hljs-keyword">int</span> rectY ,<span class="hljs-keyword">int</span> radius ,  <span class="hljs-keyword">int</span> pointX ,<span class="hljs-keyword">int</span> pointY)</span></span>&#123;
+        <span class="hljs-keyword">int</span> disX = Math.abs(rectX-pointX);
+        <span class="hljs-keyword">int</span> disY = Math.abs(rectY-pointY);
+        <span class="hljs-keyword">if</span> (disX &lt; radius &amp;&amp; disY &lt; radius)&#123;
+            <span class="hljs-keyword">return</span>  <span class="hljs-keyword">true</span>;
+        &#125;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    &#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 所有的地图块与坦克碰撞逻辑：</span>
+<span class="hljs-comment">     *   从地图块中提取8个点和</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     *                                  *   *   *</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span>                           *       *</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@return</span>                          *   *   *</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isCollideTile</span><span class="hljs-params">(List&lt;MapTile&gt; tiles)</span></span>&#123;
+        <span class="hljs-keyword">for</span> (MapTile mapTile : tiles) &#123;
+
+            <span class="hljs-keyword">if</span> (!mapTile.isVisible() || mapTile.getType() == MapTile.TYPE_COVER)&#123;
+                <span class="hljs-keyword">continue</span>;
+            &#125;
+            <span class="hljs-comment">//点1</span>
+            <span class="hljs-keyword">int</span> tileX = mapTile.getX();
+            <span class="hljs-keyword">int</span> tileY = mapTile.getY();
+            <span class="hljs-keyword">boolean</span> collide = MyUtil.isCollide(x, y, RADIUS, tileX, tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点2</span>
+            tileX += MapTile.radius;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点3</span>
+            tileX += MapTile.radius;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点4</span>
+            tileY += MapTile.radius ;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点5</span>
+            tileY += MapTile.radius ;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点6</span>
+            tileX -= MapTile.radius;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点7</span>
+            tileX -= MapTile.radius;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-comment">//点8</span>
+            tileY -= MapTile.radius;
+            collide = MyUtil.isCollide(x,y,RADIUS,tileX,tileY);
+            <span class="hljs-keyword">if</span> (collide)&#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+        &#125;
+
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+
+    &#125;
+</code></pre>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/21/%E7%AE%97%E6%B3%95%E2%80%94%E7%AE%80%E5%8D%95%E6%9F%A5%E6%89%BE/">
+                        <span class="hidden-mobile">算法—简单查找</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "java基础-坦克大战难点总结&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
